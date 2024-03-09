@@ -8,7 +8,7 @@ from utils import APIException, generate_sitemap
 #from models import Person
 
 from flask import Flask, jsonify, request
-from src.datastructures import Family
+from datastructures import Family
 
 app = Flask(__name__)
 jackson_family = Family('Jackson')
@@ -29,8 +29,9 @@ def get_member(member_id):
 @app.route('/member', methods=['POST'])
 def add_member():
     member_data = request.json
+    member_data["last_name"] = "Jackson"  # Asegúrate de que el apellido sea siempre "Jackson"
     jackson_family.add_member(member_data)
-    return jsonify({}), 200
+    return jsonify({"done": True}), 200
 
 @app.route('/member/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
